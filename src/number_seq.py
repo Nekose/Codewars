@@ -23,14 +23,12 @@ def sequencer(s):
                 truecount += 1
             else:
                 truecount -= 1
-        if truecount > 0:
+        if truecount >= 0:
             return [int(x) for x in numlist]
     return -1
 
 def slicer(s):
     for i in range(1,len(s)//2):
-        if len(s) % i != 0:
-            continue
         yield recursive_helper(s,i)
 
 def recursive_helper(s,n):
@@ -42,5 +40,17 @@ def strsplit(s,n,returnlist):
     if len(s) == 0:
         return returnlist
     strappend, remainder = s[0:n], s[n:]
+    if len(remainder) == 0:
+        returnlist.append(strappend)
+        return strsplit(remainder, n, returnlist)
+    elif strappend.count("9") == len(strappend) and remainder[0] == "1" or strappend.count("9") + strappend.count("8") == len(strappend) and remainder[0] == "1":
+        if len(returnlist) == 0:
+            remainder = s[n:]
+            returnlist.append(strappend)
+            return strsplit(remainder, n + 1, returnlist)
+        elif returnlist[-1].count("9") != len(returnlist[-1]):
+            remainder = s[n:]
+            returnlist.append(strappend)
+            return strsplit(remainder, n+1, returnlist)
     returnlist.append(strappend)
     return strsplit(remainder,n,returnlist)

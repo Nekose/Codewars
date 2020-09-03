@@ -7,6 +7,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(missing("123567"), 4)
         self.assertEqual(missing("899091939495"), 92)
         self.assertEqual(missing("9899101102"), 100)
+        self.assertEqual(missing("98100101102"), 99)
         self.assertEqual(missing("599600601602"), -1)
         self.assertEqual(missing("8990919395"), -1)
         self.assertEqual(missing("998999100010011003"), 1002)
