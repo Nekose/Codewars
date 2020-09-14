@@ -11,20 +11,31 @@ Notes:
 pre-generating the full hash table is not advised, due to the time-limit on the CW platform
 there will be only a few tests for 5-letter words (hint: start from the beginning of the alphabet)
 """
-hashdict = {}
 import hashlib
 import itertools
-def password_cracker(hash):
 
+def password_cracker(hash):
+    return _password_cracker(hash)
+
+def _password_cracker(hash):
     while hash not in hashdict:
-        for generator in password_gen():
-            for password in generator:
-                password = "".join(password)
-                hashdict[hashlib.sha1(password.encode()).hexdigest()] = password
+        password = next(passgen)
+        password = "".join(password)
+        hashdict[hashlib.sha1(password.encode()).hexdigest()] = password
     return hashdict[hash]
+
 def password_gen():
     library = "abcdefghijklmnopqrstuvwxyz"
     for i in range(1,6):
         gen = itertools.product(library,repeat=i)
-        yield gen
+        for password in gen:
+            yield password
 
+def password_cracker2(hash):
+    for length in range(6):
+        for candidate in map("".join, itertools.product("abcdefghijklmnopqrstuvwxyz", repeat=length)):
+            if hashlib.sha1(candidate.encode()).hexdigest() == hash:
+                return candidate
+
+passgen = password_gen()
+hashdict = {}
