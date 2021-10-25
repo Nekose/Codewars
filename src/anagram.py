@@ -1,6 +1,6 @@
 def anagrams(word: str, words: list) -> list:
     returnlist = []
-    for element in word:
+    for element in words:
         if detect_anagram(word,element) is True:
             returnlist.append(element)
     return returnlist
@@ -16,8 +16,13 @@ def detect_anagram(word1: str, word2: str) -> bool:
 def build_word_dict(word: str) -> dict:
     worddict = {}
     for letter in word:
-        if letter is in word1dict:
+        if letter in worddict:
             worddict[letter] += 1
         else:
             worddict[letter] = 1
     return worddict
+
+
+testanagram = ["bob","bbo","boo","bbb"]
+
+print(anagrams("bob",testanagram))
